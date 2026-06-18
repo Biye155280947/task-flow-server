@@ -1,0 +1,48 @@
+<view class="page-container">
+  <!-- 未登录状态 -->
+  <view class="login-card" wx:if="{{!loggedIn}}">
+    <view class="login-icon">⚡</view>
+    <text class="login-title">任务流程管理</text>
+    <text class="login-desc">团队协作，高效完成任务</text>
+    <button class="btn-primary" bindtap="handleLogin" loading="{{logging}}">
+      <text wx:if="{{!logging}}">微信用户一键登录</text>
+      <text wx:else>登录中...</text>
+    </button>
+    <text class="login-hint">点击即表示同意使用你的微信昵称和头像</text>
+  </view>
+
+  <!-- 待审核状态 -->
+  <view wx:elif="{{isPending}}" class="user-card" style="text-align:center;padding:120rpx 60rpx">
+    <text style="font-size:80rpx">⏳</text>
+    <text style="display:block;font-size:32rpx;color:#333;margin-top:24rpx">您的账号正在等待管理员审核</text>
+    <text style="display:block;font-size:26rpx;color:#999;margin-top:12rpx">请稍后再试或联系管理员</text>
+  </view>
+
+  <!-- 已登录状态 -->
+  <view class="user-card" wx:elif="{{loggedIn}}">
+    <view class="user-info">
+      <image class="user-avatar" src="{{userInfo.avatar || '/images/me-active.png'}}" mode="aspectFill"></image>
+      <view class="user-detail">
+        <text class="user-name">{{userInfo.name}}</text>
+        <text class="user-role">{{userInfo.role === 'admin' ? '管理员' : '成员'}}</text>
+        <text class="user-id">ID: {{userInfo.id}}</text>
+      </view>
+    </view>
+
+    <view class="action-list">
+      <view class="action-item" bindtap="goToTasks">
+        <text>📋 我的任务</text>
+        <text class="arrow">›</text>
+      </view>
+      <view class="action-item" wx:if="{{userInfo.role === 'admin'}}" bindtap="goToAdmin">
+        <view style="display:flex;align-items:center"><text>👥 用户管理</text><text wx:if="{{newMemberCount > 0}}" class="badge-new">{{newMemberCount}}位新成员</text></view>
+        <text class="arrow">›</text>
+      </view>
+      <view class="action-item" wx:if="{{userInfo.role === 'admin'}}" bindtap="goToCreate">
+        <text>➕ 发布新任务</text>
+        <text class="arrow">›</text>
+      </view>
+    </view>
+
+  </view>
+</view>

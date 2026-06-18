@@ -1,0 +1,37 @@
+<view class="page-container">
+  <view class="card">
+    <text class="section-title">发布任务</text>
+
+    <text class="field-label">任务标题 *</text>
+    <input class="input-field" placeholder="请输入任务标题" value="{{title}}" bindinput="onTitleInput" maxlength="50" />
+
+    <text class="field-label">任务描述</text>
+    <textarea class="input-field textarea" placeholder="可选：添加任务描述" value="{{description}}" bindinput="onDescInput" maxlength="200" />
+
+    <text class="field-label">执行人 *（可多选）</text>
+    <view wx:if="{{userList.length === 0}}" class="empty-members">
+      <text class="empty-members-text">暂无团队成员</text>
+      <text class="empty-members-hint">请其他成员登录小程序后，即可选择他们作为执行人</text>
+    </view>
+    <checkbox-group wx:if="{{userList.length > 0}}" class="check-group" bindchange="onCheckboxChange">
+      <label class="check-row" wx:for="{{userList}}" wx:key="id">
+        <checkbox value="{{item.id}}" class="check-native" />
+        <text class="check-name">{{item.name}}</text>
+      </label>
+    </checkbox-group>
+    <text wx:if="{{assignees.length === 0 && showAssigneeHint}}" class="hint-text">请至少选择一位执行人</text>
+
+    <text class="field-label">截止日期和时间</text>
+    <picker mode="date" value="{{deadlineDate}}" bindchange="onDeadlineDateChange">
+      <view class="picker-value">{{deadlineDate || "请选择日期"}}</view>
+    </picker>
+    <picker mode="time" value="{{deadlineTime}}" bindchange="onDeadlineTimeChange">
+      <view class="picker-value">{{deadlineTime || "请选择时间（选填）"}}</view>
+    </picker>
+  </view>
+
+  <button class="btn-primary" bindtap="handleCreate" loading="{{submitting}}">
+    <text wx:if="{{!submitting}}">发布任务</text>
+    <text wx:else>发布中...</text>
+  </button>
+</view>

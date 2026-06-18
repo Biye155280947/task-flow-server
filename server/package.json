@@ -1,0 +1,9 @@
+{
+  "name": "task-flow-server",
+  "version": "1.0.0",
+  "description": "任务流程管理系统后端服务",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  }
+}

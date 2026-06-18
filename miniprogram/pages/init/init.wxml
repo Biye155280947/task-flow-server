@@ -1,0 +1,25 @@
+<view class="init-container">
+  <view class="init-card">
+    <view class="init-icon">🏢</view>
+    <text class="init-title">欢迎使用任务流程管理</text>
+    <text class="init-desc">你需要先创建一个团队，或加入已有团队</text>
+
+    <view class="init-divider"></view>
+
+    <!-- 创建团队 -->
+    <input class="input-field" placeholder="输入团队名称（如：市场部）" value="{{teamName}}" bindinput="onTeamNameInput" maxlength="20" />
+    <button class="btn-primary" bindtap="handleSetup" loading="{{settingUp}}">
+      <text wx:if="{{!settingUp}}">创建团队</text>
+      <text wx:else>创建中...</text>
+    </button>
+
+    
+
+    <!-- 加入团队 -->
+    <input class="input-field" placeholder="输入邀请码" value="{{inviteCode}}" bindinput="onInviteCodeInput" maxlength="6" style="text-transform:uppercase;letter-spacing:6rpx" />
+    <button class="btn-primary" style="background:linear-gradient(135deg,#00B87A,#00C9A7)" bindtap="handleJoinTeam" loading="{{joining}}">
+      <text wx:if="{{!joining}}">加入团队</text>
+      <text wx:else>加入中...</text>
+    </button>
+  </view>
+</view>

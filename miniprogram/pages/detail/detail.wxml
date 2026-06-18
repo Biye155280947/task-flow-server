@@ -1,0 +1,93 @@
+<view class="page-container">
+  <!-- 加载中 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 任务详情 -->
+  <view wx:else>
+    <view class="card" wx:if="{{task}}">
+      <view class="detail-header">
+        <text class="detail-title">{{task.title}}</text>
+        <text class="task-status {{task.status}}">
+          {{task.status === 'pending' ? '待处理' : task.status === 'in_progress' ? '进行中' : '已完成'}}
+        </text>
+      </view>
+
+      <text wx:if="{{task.description}}" class="detail-desc">{{task.description}}</text>
+
+      <view class="detail-section">
+        <text class="section-label">总进度</text>
+        <view class="task-progress">
+          <view class="progress-bar">
+            <view class="progress-bar-inner {{task.status === 'completed' ? 'completed' : ''}}" style="width: {{task.totalProgress}}%;"></view>
+          </view>
+          <text class="progress-text {{task.status === 'completed' ? 'completed' : ''}}">{{task.totalProgress}}%</text>
+        </view>
+      </view>
+
+      <!-- 多人进度 -->
+      <view wx:if="{{task.assigneeProgress && task.assigneeProgress.length > 1}}" class="detail-section">
+        <text class="section-label">成员进度</text>
+        <view class="person-progress">
+          <view class="person-row" wx:for="{{task.assigneeProgress}}" wx:key="id">
+            <text class="person-label {{item.completed ? 'completed' : ''}}">{{item.name}}<text wx:if="{{item.completed}}"> ✅</text></text>
+            <view class="progress-bar mini">
+              <view class="progress-bar-inner" style="width: {{item.completed ? item.share : 0}}%;"></view>
+            </view>
+            <text class="progress-num {{item.completed ? 'completed' : ''}}">{{item.completed ? item.share + '%' : '待完成'}}</text>
+            <text wx:if="{{item.progress >= 100 && task.comments && task.comments[item.id]}}" class="comment-badge">✅</text>
+          </view>
+          <view wx:if="{{task.comments}}" wx:for="{{task.assigneeProgress}}" wx:key="id">
+            <view wx:if="{{task.comments[item.id]}}" class="comment-item">
+              <text class="comment-user">✅ {{item.name}}</text>
+              <text class="comment-time">{{task.comments[item.id].completedAt.substring(5, 16)}} {{task.comments[item.id].completedAt.substring(11, 16)}}</text>
+              <text wx:if="{{task.comments[item.id].note}}" class="comment-note">{{task.comments[item.id].note}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- 完成任务按钮 -->
+      <view class="detail-section" wx:if="{{isMyTask && !task.alreadyCompleted}}">
+        <view wx:if="{{showNoteInput}}" style="margin-bottom:16rpx">
+          <text class="section-label">完成备注（可选）</text>
+          <input class="input-field" placeholder="写一下完成情况..." value="{{note}}" bindinput="onNoteInput" maxlength="100" />
+        </view>
+        <button wx:if="{{!showNoteInput}}" class="btn-primary" bindtap="showNote">完成任务</button>
+        <button wx:if="{{showNoteInput}}" class="btn-primary" bindtap="handleComplete" loading="{{updating}}">
+          <text wx:if="{{!updating}}">确认提交</text>
+          <text wx:else>提交中...</text>
+        </button>
+      </view>
+      <view wx:if="{{isMyTask && task.alreadyCompleted}}" class="detail-section" style="text-align:center">
+        <text style="font-size:32rpx;color:#00B87A;font-weight:600">✅ 你已完成此任务</text>
+      </view>
+
+      <view class="detail-section">
+        <text class="section-label">任务信息</text>
+        <view class="info-row">
+          <text class="info-key">执行人：</text>
+          <text class="info-val"><text wx:for="{{task.assignees}}" wx:for-item="a" wx:key="id">{{a.name}}<text wx:if="{{index < task.assignees.length - 1}}">、</text></text></text>
+        </view>
+        <view wx:if="{{task.deadline}}" class="info-row">
+          <text class="info-key">截止日期：</text>
+          <text class="info-val {{isOverdue(task.deadline) && task.status !== 'completed' ? 'overdue' : ''}}">{{task.deadline}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-key">发布者：</text>
+          <text class="info-val">{{task.createdBy.name}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-key">发布时间：</text>
+          <text class="info-val">{{formatDate(task.createdAt)}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 删除按钮（管理员） -->
+    <button wx:if="{{task && userRole === 'admin'}}" class="btn-danger" bindtap="handleDelete">
+      删除任务
+    </button>
+  </view>
+</view>

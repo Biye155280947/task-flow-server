@@ -1,0 +1,36 @@
+.detail-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20rpx; }
+.detail-title { font-size: 36rpx; color: #1A1D29; flex: 1; margin-right: 16rpx; }
+.detail-desc { font-size: 28rpx; color: #5A6072; line-height: 1.6; padding: 20rpx 0; border-bottom: 2rpx solid #F0F2F5; margin-bottom: 20rpx; }
+.task-status { font-size: 22rpx; padding: 6rpx 18rpx; border-radius: 20rpx; }
+.task-status.pending { background: rgba(255,170,0,0.10); color: #E89600; }
+.task-status.in_progress { background: rgba(91,127,255,0.10); color: #5B7FFF; }
+.task-status.completed { background: rgba(0,214,143,0.10); color: #00B87A; }
+.detail-section { margin-bottom: 28rpx; }
+.section-label { font-size: 28rpx; color: #1A1D29; margin-bottom: 14rpx; }
+.task-progress { display: flex; align-items: center; }
+.progress-bar { flex: 1; height: 14rpx; background: #F0F2F5; border-radius: 7rpx; overflow: hidden; margin-right: 16rpx; }
+.progress-bar.mini { height: 10rpx; width: 200rpx; }
+.progress-bar-inner { height: 100%; background: linear-gradient(90deg, #5B7FFF, #7C5CFC); border-radius: 7rpx; }
+.progress-bar-inner.completed { background: linear-gradient(90deg, #00D68F, #00C9A7); }
+.progress-text { font-size: 30rpx; color: #5B7FFF; }
+.progress-text.completed { color: #00B87A; }
+.person-progress { background: #FAFBFC; border-radius: 14rpx; padding: 20rpx; }
+.person-row { display: flex; align-items: center; margin: 10rpx 0; }
+.person-label { width: 120rpx; font-size: 26rpx; }
+.person-label.completed { color: #00B87A; font-weight: 500; }
+.progress-num { text-align: right; font-size: 24rpx; color: #5B7FFF; }
+.slider-value { font-size: 52rpx; color: #5B7FFF; }
+.info-row { display: flex; margin: 10rpx 0; font-size: 26rpx; }
+.info-key { color: #9EA4B4; width: 140rpx; }
+.info-val { color: #5A6072; flex: 1; }
+.info-val.overdue { color: #FF5C5C; }
+.comment-badge { margin-left: 8rpx; font-size: 24rpx; }
+.comment-item { padding: 8rpx 0 0 120rpx; }
+.comment-user { font-size: 24rpx; font-weight: 500; color: #388E3C; display: block; }
+.comment-time { font-size: 20rpx; color: #B0B4C0; display: block; margin-top: 2rpx; }
+.comment-note { font-size: 24rpx; color: #5A6072; display: block; margin-top: 4rpx; font-style: italic; }
+.comment-badge { margin-left: 8rpx; font-size: 24rpx; }
+
+.person-label.completed { color: #00B87A; font-weight: 500; }
+
+.progress-num.completed { color: #00B87A; }

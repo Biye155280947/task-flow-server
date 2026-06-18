@@ -1,0 +1,20 @@
+.section-subtitle { font-size: 26rpx; color: #9EA4B4; margin-top: 8rpx; }
+.user-item { display: flex; justify-content: space-between; align-items: center; background: #fff; border-radius: 16rpx; padding: 28rpx 32rpx; margin-bottom: 12rpx; }
+.user-left { display: flex; align-items: center; flex: 1; }
+.user-avatar { width: 72rpx; height: 72rpx; border-radius: 50%; margin-right: 20rpx; background: #F0F2F5; }
+.user-name-text { font-size: 30rpx; color: #1A1D29; }
+.edit-input { background: #F5F7FA; border: 2rpx solid #5B7FFF; border-radius: 10rpx; padding: 12rpx 18rpx; font-size: 28rpx; }
+.user-role-tag { font-size: 22rpx; padding: 4rpx 14rpx; border-radius: 20rpx; }
+.user-role-tag.admin { background: rgba(255,170,0,0.10); color: #E89600; }
+.user-role-tag.user { background: rgba(91,127,255,0.10); color: #5B7FFF; }
+.user-actions { display: flex; gap: 10rpx; }
+.action-btn { padding: 10rpx 24rpx; border-radius: 8rpx; font-size: 24rpx; }
+.action-btn.edit { background: #F5F7FA; color: #8E92A0; }
+.action-btn.promote { background: rgba(0,214,143,0.10); color: #00B87A; }
+.action-btn.demote { background: rgba(255,170,0,0.10); color: #E89600; }
+.action-btn.save { background: #5B7FFF; color: #fff; }
+.action-btn.cancel { background: #F5F7FA; color: #B0B4C0; }
+.user-id-text { font-size: 20rpx; color: #C0C4D0; display: block; margin-top: 4rpx; word-break: break-all; }
+
+.action-btn.delete { background: rgba(255,107,107,0.10); color: #FF5C5C; }
+.action-btn.delete:active { background: rgba(255,107,107,0.20); }

@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "id": "mqirwia1jgoh",
+    "userId": "member_zhang",
+    "type": "task_assigned",
+    "title": "新任务分配",
+    "message": "你被分配了任务 11",
+    "taskId": "mqirwia1tvki",
+    "read": false,
+    "createdAt": "2026-06-18T00:40:08.329Z"
+  },
+  {
+    "id": "mqirwia7xzqm",
+    "userId": "member_li",
+    "type": "task_assigned",
+    "title": "新任务分配",
+    "message": "你被分配了任务 11",
+    "taskId": "mqirwia1tvki",
+    "read": false,
+    "createdAt": "2026-06-18T00:40:08.335Z"
+  },
+  {
+    "id": "mqisdsaiz4e6",
+    "userId": "member_zhang",
+    "type": "task_assigned",
+    "title": "新任务分配",
+    "message": "你被分配了任务 1123",
+    "taskId": "mqisdsacolli",
+    "read": false,
+    "createdAt": "2026-06-18T00:53:34.458Z"
+  }
+]

@@ -1,1 +1,47 @@
-[]
+[
+  {
+    "id": "dev_user",
+    "name": "用户user",
+    "role": "admin",
+    "status": "active",
+    "avatar": "",
+    "createdAt": "2026-06-18T00:28:46.511Z",
+    "teamId": "team_mqirqmnn5acr"
+  },
+  {
+    "id": "member_zhang",
+    "name": "张三",
+    "role": "user",
+    "status": "active",
+    "avatar": "",
+    "createdAt": "2026-06-18T00:39:30.814Z",
+    "teamId": "team_mqirqmnn5acr"
+  },
+  {
+    "id": "member_li",
+    "name": "李四",
+    "role": "user",
+    "status": "active",
+    "avatar": "",
+    "createdAt": "2026-06-18T00:39:30.814Z",
+    "teamId": "team_mqirqmnn5acr"
+  },
+  {
+    "id": "member_wang",
+    "name": "小王",
+    "role": "user",
+    "status": "active",
+    "avatar": "",
+    "createdAt": "2026-06-18T00:39:30.814Z",
+    "teamId": "team_mqirqmnn5acr"
+  },
+  {
+    "id": "member_zhao",
+    "name": "小赵",
+    "role": "user",
+    "status": "active",
+    "avatar": "",
+    "createdAt": "2026-06-18T00:39:30.814Z",
+    "teamId": "team_mqirqmnn5acr"
+  }
+]

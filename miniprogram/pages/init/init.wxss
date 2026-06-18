@@ -1,0 +1,9 @@
+.init-container { display: flex; justify-content: center; align-items: center; min-height: 80vh; padding: 60rpx; }
+.init-card { background: #fff; border-radius: 28rpx; padding: 60rpx 50rpx; text-align: center; max-width: 600rpx; }
+.init-icon { font-size: 100rpx; margin-bottom: 24rpx; }
+.init-title { font-size: 38rpx; color: #1A1D29; margin-bottom: 16rpx; }
+.init-desc { font-size: 28rpx; color: #5A6072; }
+.init-desc-sub { font-size: 24rpx; color: #9EA4B4; margin-top: 8rpx; }
+.init-divider { height: 2rpx; background: #F0F2F5; margin: 40rpx 0; }
+.init-skip { margin-top: 32rpx; text-align: center; }
+.init-skip text { font-size: 26rpx; color: #C0C4D0; border-bottom: 2rpx solid #E8EAEE; }

@@ -1,0 +1,88 @@
+<view class="page-tasks">
+  <view class="top-bar">
+    <text class="page-title">我的任务</text>
+    <view class="top-actions">
+      <view wx:if="{{userInfo.role === 'admin'}}" class="add-btn" bindtap="goToCreate">+ 新建</view>
+    </view>
+  </view>
+
+  <scroll-view class="filter-bar" scroll-x="true" show-scrollbar="{{false}}">
+    <view class="filter-tabs">
+      <view class="filter-tab {{currentFilter === 'all' ? 'active' : ''}}" data-filter="all" bindtap="switchFilter">全部</view>
+      <view class="filter-tab {{currentFilter === 'pending' ? 'active' : ''}}" data-filter="pending" bindtap="switchFilter">待处理</view>
+      <view class="filter-tab {{currentFilter === 'in_progress' ? 'active' : ''}}" data-filter="in_progress" bindtap="switchFilter">进行中</view>
+      <view class="filter-tab {{currentFilter === 'completed' ? 'active' : ''}}" data-filter="completed" bindtap="switchFilter">已完成</view>
+    </view>
+  </scroll-view>
+
+  <view wx:if="{{inboxNotifs.length > 0}}" class="reminder-banner" style="border-left-color:#5B7FFF;background:rgba(91,127,255,0.05)">
+    <view class="reminder-header">
+      <text class="reminder-title" style="color:#5B7FFF">📬 {{inboxNotifs.length}} 条新消息</text>
+      <text class="reminder-dismiss" bindtap="dismissNotifications">忽略</text>
+    </view>
+    <view class="reminder-item" wx:for="{{inboxNotifs}}" wx:key="id">
+      <view class="reminder-left">
+        <text class="reminder-task-name">{{item.title}}</text>
+        <text class="reminder-deadline">{{item.message}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{reminders.length > 0}}" class="reminder-banner">
+    <view class="reminder-header">
+      <text class="reminder-title">{{reminders.length}} 个任务待提醒</text>
+      <text class="reminder-dismiss" bindtap="dismissAllReminders">忽略</text>
+    </view>
+    <view class="reminder-item" wx:for="{{reminders}}" wx:key="taskId" data-taskid="{{item.taskId}}" bindtap="onReminderTap">
+      <view class="reminder-left">
+        <text class="reminder-task-name">{{item.taskTitle}}</text>
+        <text class="reminder-deadline">截止: {{item.deadline}}</text>
+      </view>
+      <view class="reminder-right">
+        <text wx:if="{{item.reason === 'urgent'}}" class="reminder-tag urgent">紧急</text>
+        <text wx:else class="reminder-tag daily">每日提醒</text>
+      </view>
+    </view>
+  </view>
+
+  <scroll-view class="task-list" scroll-y="true" refresher-enabled="{{true}}" refresher-triggered="{{refreshing}}" bindrefresherrefresh="onRefresh" bindscrolltolower="loadMore">
+    <view wx:if="{{filteredTasks.length === 0 && !loading}}" class="empty-state">
+      <text>暂无任务</text>
+    </view>
+
+    <view class="task-item" wx:for="{{filteredTasks}}" wx:key="id" data-id="{{item.id}}" bindtap="goToDetail">
+      <view class="task-header">
+        <text class="task-title">{{item.title}}</text>
+        <text class="task-status {{item.status}}">{{item.statusName}}</text>
+      </view>
+
+      <view class="task-persons">
+        <text class="person-label">执行人：</text>
+        <text class="person-name" wx:for="{{item.assignees}}" wx:for-item="a" wx:for-index="i" wx:key="id">{{a.name}}<text wx:if="{{a._isDone}}" class="done-label">[已完成]</text><text wx:if="{{i < item.assignees.length - 1}}">、</text></text>
+      </view>
+
+      <view class="task-progress">
+        <view class="progress-bar">
+          <view class="progress-bar-inner {{item.status === 'completed' ? 'completed' : ''}}" style="width: {{item.totalProgress}}%;"></view>
+        </view>
+        <text class="progress-text {{item.status === 'completed' ? 'completed' : ''}}">{{item.totalProgress}}%</text>
+      </view>
+
+      <view wx:if="{{item.assigneeProgress && item.assignees.length > 1}}" class="multi-progress">
+        <text class="multi-text {{ap.completed ? 'done' : ''}}" wx:for="{{item.assigneeProgress}}" wx:for-item="ap" wx:key="id">{{ap.name}}: {{ap.completed ? '已完成' : '待完成'}}</text>
+      </view>
+
+      <view class="task-meta">
+        <view class="meta-left">
+        <text wx:if="{{item.deadline}}" class="deadline {{item._overdue ? 'overdue' : ''}}">截止 {{item.deadline}}</text>
+        <text wx:if="{{item._remaining}}" class="remaining {{item._overdue ? 'overdue' : ''}}">{{item._remaining}}</text>
+        </view>
+        <text class="creator">{{item.createdBy.name}}</text>
+      </view>
+    </view>
+
+    <view wx:if="{{loading}}" class="loading-container">
+      <text>加载中...</text>
+    </view>
+  </scroll-view>
+</view>

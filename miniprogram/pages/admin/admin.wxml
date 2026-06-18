@@ -1,0 +1,87 @@
+<view class="page-container">
+    <view wx:if="{{pendingUsers.length > 0}}" class="card" style="border-left: 8rpx solid #FFA000">
+    <text class="section-title">待审核成员</text>
+    <view class="user-item" wx:for="{{pendingUsers}}" wx:key="id">
+      <view class="user-left">
+        <image class="user-avatar" src="{{item.avatar || '/images/me-active.png'}}" mode="aspectFill"></image>
+        <view class="user-meta">
+          <text class="user-name-text">{{item.name}}</text>
+          <text class="user-role-tag" style="background:rgba(255,170,0,0.10);color:#E89600">待审核</text>
+        </view>
+      </view>
+      <view class="user-actions">
+        <view class="action-btn" style="background:rgba(0,214,143,0.10);color:#00B87A" bindtap="handleApprove" data-id="{{item.id}}" data-name="{{item.name}}">通过</view>
+        <view class="action-btn" style="background:rgba(255,107,107,0.10);color:#FF5C5C" bindtap="handleReject" data-id="{{item.id}}" data-name="{{item.name}}">拒绝</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{teamInfo}}" class="card" style="border-left:8rpx solid #5B7FFF">
+    <!-- 团队名称（管理员可修改） -->
+    <block wx:if="{{renamingTeam}}">
+      <input class="input-field" value="{{teamNameNew}}" bindinput="onRenameTeamInput" maxlength="20" />
+      <view style="display:flex;gap:12rpx;margin-top:12rpx">
+        <view class="action-btn save" style="flex:1;text-align:center" bindtap="handleRenameTeam">保存</view>
+        <view class="action-btn cancel" style="flex:1;text-align:center" bindtap="cancelRenameTeam">取消</view>
+      </view>
+    </block>
+    <block wx:else>
+      <view style="display:flex;align-items:center;justify-content:space-between">
+        <text class="section-title" style="margin-bottom:0">{{teamInfo.name}}</text>
+        <view wx:if="{{userRole === 'admin'}}" class="action-btn edit" bindtap="startRenameTeam">修改名称</view>
+      </view>
+    </block>
+    <text style="display:block;font-size:24rpx;color:#999;margin-top:16rpx">邀请码：<text style="color:#5B7FFF;font-weight:bold;letter-spacing:4rpx">{{teamInfo.inviteCode}}</text></text>
+    <text style="display:block;font-size:22rpx;color:#C0C4D0;margin-top:4rpx">将邀请码发给其他成员，登录后在「我的」页面输入即可加入</text>
+    <view wx:if="{{userRole === 'admin'}}" class="btn-danger" style="margin-top:24rpx;padding:16rpx" bindtap="handleDeleteTeam">解散团队</view>
+  </view>
+  <view wx:if="{{!teamInfo}}" class="card">
+    <text class="section-title">创建团队</text>
+    <input class="input-field" placeholder="输入团队名称" value="{{newTeamName}}" bindinput="onNewTeamNameInput" maxlength="20" />
+    <button class="btn-primary" bindtap="handleCreateTeam" loading="{{creatingTeam}}">创建团队</button>
+  </view>
+
+  <view class="card">
+    <text class="section-title">用户管理</text>
+    <text class="section-subtitle">管理员可修改所有用户的名称</text>
+  </view>
+
+  <!-- 用户列表 -->
+  <view wx:if="{{users.length === 0}}" class="empty-state">
+    <text>暂无用户</text>
+  </view>
+
+  <view class="user-item" wx:for="{{users}}" wx:key="id">
+    <view class="user-left">
+      <image class="user-avatar" src="{{item.avatar || '/images/me-active.png'}}" mode="aspectFill"></image>
+      <view class="user-meta">
+        <view class="user-name-row">          
+          <block wx:if="{{editingId !== item.id}}">
+            <text class="user-name-text">{{item.name}}</text>
+            <text class="user-id-text">微信ID: {{item.id}}</text>
+          </block>
+          <block wx:else>
+            <input class="edit-input" value="{{editName}}" focus="{{true}}" bindinput="onEditNameInput" maxlength="20" />
+          </block>
+        </view>
+        <text class="user-role-tag {{item.role}}">{{item.role === 'admin' ? '管理员' : '成员'}}</text>
+      </view>
+    </view>
+    <view class="user-actions">
+      <block wx:if="{{editingId === item.id}}">
+        <view class="action-btn save" bindtap="saveEdit" data-id="{{item.id}}">保存</view>
+        <view class="action-btn cancel" bindtap="cancelEdit">取消</view>
+      </block>
+      <block wx:else>
+        <view wx:if="{{userRole === 'admin' && item.role === 'user'}}" class="action-btn promote" bindtap="handlePromote" data-id="{{item.id}}" data-name="{{item.name}}">提升</view>
+        <view wx:elif="{{userRole === 'admin' && item.role === 'admin' && item.id !== currentUserId}}" class="action-btn demote" bindtap="handleDemote" data-id="{{item.id}}" data-name="{{item.name}}">降级</view>
+        <view class="action-btn edit" bindtap="startEdit" data-id="{{item.id}}" data-name="{{item.name}}">改名</view>
+        <view class="action-btn delete" bindtap="handleDeleteMember" data-id="{{item.id}}" data-name="{{item.name}}">删除</view>
+      </block>
+    </view>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading-container">
+    <text>加载中...</text>
+  </view>
+</view>
